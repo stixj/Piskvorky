@@ -1,0 +1,120 @@
+body {
+    background-color: #BFA6A0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.double-underline {
+    display: inline-block;
+    border-bottom: 3px double #fff;
+    margin: 10px 0 5px 0;
+    padding-bottom: 5px;
+    font-size: 2em;
+    letter-spacing: 2px;
+}
+
+#game-info {
+    margin: 20px 0 10px 0;
+    font-size: 1.2em;
+    min-height: 1.5em;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(25, 32px);
+    grid-template-rows: repeat(25, 32px);
+    gap: 2px;
+    justify-content: center;
+    margin: 0 auto 30px auto;
+    width: max-content;
+    background: #3a4020;
+    border: 4px solid #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #222;
+}
+
+.cell {
+    width: 32px;
+    height: 32px;
+    background: #e0e0c0;
+    border: 1px solid #888;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.cell:hover {
+    background: #d0d08a;
+}
+
+.cell.x {
+    color: #1976d2;
+    font-weight: bold;
+}
+
+.cell.o {
+    color: #000;
+    font-weight: bold;
+}
+
+.cell.o svg {
+    display: block;
+    margin: auto;
+}
+
+.cell svg {
+    display: block;
+    margin: auto;
+}
+
+.logo-bg {
+    position: fixed;
+    top: 2vw;
+    right: 2vw;
+    width: 10vw;
+    min-width: 80px;
+    max-width: 180px;
+    height: auto;
+    opacity: 0.3;
+    z-index: 1;
+    pointer-events: none;
+}
+
+#player-setup {
+    margin: 30px 0 20px 0;
+}
+
+#player-setup input {
+    padding: 8px;
+    font-size: 1em;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    width: 180px;
+    max-width: 40vw;
+}
+
+#player-setup button {
+    padding: 8px 18px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    background: #1976d2;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background 0.2s;
+}
+
+#player-setup button:hover {
+    background: #145A32;
+}
