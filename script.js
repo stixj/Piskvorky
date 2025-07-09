@@ -1,12 +1,14 @@
-const SIZE = 25;
+const SIZE = 18;
 const WIN_LENGTH = 4;
 
 const boardElement = document.getElementById('board');
+const infoRow = document.getElementById('game-info-row');
 const infoElement = document.getElementById('game-info');
 const playerSetup = document.getElementById('player-setup');
 const startBtn = document.getElementById('start-btn');
 const player1Input = document.getElementById('player1-name');
 const player2Input = document.getElementById('player2-name');
+const restartBtn = document.getElementById('restart-btn');
 
 let board = [];
 let currentPlayer = 'x'; // 'x' = křížek, 'o' = kolečko
@@ -34,17 +36,17 @@ function renderBoard() {
                 cell.classList.add('x');
                 // SVG křížek
                 cell.innerHTML = `
-                  <svg width="22" height="22" viewBox="0 0 22 22">
-                    <line x1="4" y1="4" x2="18" y2="18" stroke="#1976d2" stroke-width="4" stroke-linecap="round"/>
-                    <line x1="18" y1="4" x2="4" y2="18" stroke="#1976d2" stroke-width="4" stroke-linecap="round"/>
+                  <svg width="32" height="32" viewBox="0 0 32 32">
+                    <line x1="6" y1="6" x2="26" y2="26" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="26" y1="6" x2="6" y2="26" stroke="#1976d2" stroke-width="6" stroke-linecap="round"/>
                   </svg>
                 `;
             } else if (board[row][col] === 'o') {
                 cell.classList.add('o');
                 // SVG kolečko
                 cell.innerHTML = `
-                  <svg width="22" height="22" viewBox="0 0 22 22">
-                    <circle cx="11" cy="11" r="8" stroke="#000" stroke-width="4" fill="none"/>
+                  <svg width="32" height="32" viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" r="10" stroke="#000" stroke-width="6" fill="none"/>
                   </svg>
                 `;
             }
@@ -66,20 +68,25 @@ function onCellClick(e) {
 
     if (checkWin(row, col, currentPlayer)) {
         infoElement.textContent = `Vyhrál: ${playerNames[currentPlayer]}!`;
+        infoElement.classList.add('winner-message');
         gameOver = true;
+        enableRestartOnEnter();
         return;
     }
 
     // Kontrola remízy
     if (board.flat().every(cell => cell !== '')) {
         infoElement.textContent = 'Remíza!';
+        infoElement.classList.remove('winner-message');
         gameOver = true;
+        enableRestartOnEnter();
         return;
     }
 
     // Střídání hráčů
     currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
     infoElement.textContent = `Na tahu: ${playerNames[currentPlayer]}`;
+    infoElement.classList.remove('winner-message');
 }
 
 // Kontrola výhry
@@ -108,6 +115,21 @@ function countInDirection(row, col, player, dRow, dCol) {
     return count;
 }
 
+function enableRestartOnEnter() {
+    function onEnter(e) {
+        if (e.key === "Enter") {
+            restartBtn.click();
+        }
+    }
+    document.addEventListener('keydown', onEnter);
+
+    // Po restartu odeber posluchač, aby se nespouštěl vícekrát
+    restartBtn.addEventListener('click', function removeListener() {
+        document.removeEventListener('keydown', onEnter);
+        restartBtn.removeEventListener('click', removeListener);
+    });
+}
+
 // Spuštění hry po zadání jmen
 startBtn.addEventListener('click', () => {
     const name1 = player1Input.value.trim() || "Hráč 1";
@@ -118,21 +140,36 @@ startBtn.addEventListener('click', () => {
     initBoard();
     renderBoard();
     infoElement.textContent = `Na tahu: ${playerNames[currentPlayer]}`;
+    infoElement.classList.remove('winner-message');
     playerSetup.style.display = 'none';
     boardElement.style.display = '';
-    infoElement.style.display = '';
+    infoRow.style.display = 'flex';
 });
 
-// Volitelné: možnost restartu hry (ponechávám pro případné rozšíření)
-function resetGame() {
-    currentPlayer = 'x';
-    gameOver = false;
-    initBoard();
-    renderBoard();
-    infoElement.textContent = `Na tahu: ${playerNames[currentPlayer]}`;
-}
+// Funkce pro restart hry s dotazem na jména
+restartBtn.addEventListener('click', () => {
+    const reallyRestart = confirm("Opravdu chcete začít hrát znovu?");
+    if (!reallyRestart) return;
+
+    const samePlayers = confirm("Chcete hrát se stejnými hráči?\nZvolte 'OK' pro stejná jména, 'Zrušit' pro nová jména.");
+    if (samePlayers) {
+        currentPlayer = 'x';
+        gameOver = false;
+        initBoard();
+        renderBoard();
+        infoElement.textContent = `Na tahu: ${playerNames[currentPlayer]}`;
+        infoElement.classList.remove('winner-message');
+    } else {
+        // Zobrazit formulář pro nová jména
+        player1Input.value = "";
+        player2Input.value = "";
+        playerSetup.style.display = '';
+        boardElement.style.display = 'none';
+        infoRow.style.display = 'none';
+    }
+});
 
 // Inicializace – zobraz pouze formulář na jména
 playerSetup.style.display = '';
 boardElement.style.display = 'none';
-infoElement.style.display = 'none';
+infoRow.style.display = 'none';

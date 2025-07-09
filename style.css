@@ -1,5 +1,5 @@
 body {
-    background-color: #BFA6A0;
+    background-color: #93C572;
     font-family: Arial, sans-serif;
     color: #fff;
     text-align: center;
@@ -15,6 +15,7 @@ body {
     padding-bottom: 5px;
     font-size: 2em;
     letter-spacing: 2px;
+    font-family: 'Merriweather', serif;
 }
 
 #game-info {
@@ -25,21 +26,21 @@ body {
 
 #board {
     display: grid;
-    grid-template-columns: repeat(25, 32px);
-    grid-template-rows: repeat(25, 32px);
+    grid-template-columns: repeat(18, 36px);
+    grid-template-rows: repeat(18, 36px);
     gap: 2px;
     justify-content: center;
     margin: 0 auto 30px auto;
     width: max-content;
-    background: #3a4020;
+    background: #F5DEB3;
     border: 4px solid #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px #222;
 }
 
 .cell {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background: #e0e0c0;
     border: 1px solid #888;
     font-size: 1.5em;
@@ -73,6 +74,8 @@ body {
 .cell svg {
     display: block;
     margin: auto;
+    width: 32px;
+    height: 32px;
 }
 
 .logo-bg {
@@ -117,4 +120,33 @@ body {
 
 #player-setup button:hover {
     background: #145A32;
+}
+
+#game-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#restart-btn {
+    padding: 6px 16px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    background: #1976d2;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#restart-btn:hover {
+    background: #145A32;
+}
+
+.winner-message {
+    color: #e53935;
+    font-weight: bold;
 }

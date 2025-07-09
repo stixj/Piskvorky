@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <title>Direct piškvorky</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:700&display=swap" rel="stylesheet">
 </head>
 <body>
     <img src="logo.png" alt="Logo" class="logo-bg">
-    <h1 class="double-underline">Direct piškvorky</h1>
+    <h1 class="double-underline">Piškvorky</h1>
     <div id="player-setup">
         <input type="text" id="player1-name" placeholder="Jméno hráče 1 (křížky)" maxlength="20">
         <input type="text" id="player2-name" placeholder="Jméno hráče 2 (kolečka)" maxlength="20">
         <button id="start-btn">Start</button>
     </div>
-    <div id="game-info" style="display:none"></div>
+    <div id="game-info-row" style="display:none; align-items: center; justify-content: center; gap: 10px;">
+        <span id="game-info"></span>
+        <button id="restart-btn">Hrát znovu</button>
+    </div>
     <div id="board" style="display:none"></div>
     <script src="script.js"></script>
 </body>
